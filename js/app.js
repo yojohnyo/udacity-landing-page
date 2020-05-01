@@ -22,31 +22,45 @@
 /**
  * End Global Variables
  * Start Helper Functions
- * 
-*/
+ *
+ */
 
 
+// build the nav
+function buildNavigationList() {
+    let sections = document.querySelectorAll('section');
+    const navUl = document.getElementById('navbar__list');
+
+    for (const section of sections) {
+        const navItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.setAttribute('href', `#${section.id}`);
+        console.log(link);
+        link.textContent = section.dataset.nav;
+        navItem.appendChild(link);
+        navUl.appendChild(navItem);
+    }
+}
+
+function listenForDOMChanges() {
+    const bodyNode = document.getElementsByTagName('main')[0];
+    const config = { attributes: true, childList: true, subtree: true };
+    const callback = function(mutationsList, observer){
+        console.log('here');
+        buildNavigationList();
+    };
+    const observer = new MutationObserver(callback);
+    observer.observe(bodyNode, config);
+
+}
 
 /**
  * End Helper Functions
  * Begin Main Functions
- * 
-*/
+ *
+ */
 
-// build the nav
-let sections = document.querySelectorAll('section');
-console.log(sections);
-const navUl = document.getElementById('navbar__list');
-
-for (const section of sections) {
-    const navItem = document.createElement('li');
-    const link = document.createElement('a');
-    link.setAttribute('href', `#${section.id}`);
-    link.textContent = section.dataset.nav;
-    navItem.appendChild(link);
-    navUl.appendChild(navItem);
-}
-
+listenForDOMChanges();
 // Add class 'active' to section when near top of viewport
 
 
