@@ -25,21 +25,13 @@
  *
  */
 
-
-// build the nav
-function buildNavigationList() {
-    let sections = document.querySelectorAll('section');
-    const navUl = document.getElementById('navbar__list');
-
-    for (const section of sections) {
-        const navItem = document.createElement('li');
-        const link = document.createElement('a');
-        link.setAttribute('href', `#${section.id}`);
-        console.log(link);
-        link.textContent = section.dataset.nav;
-        navItem.appendChild(link);
-        navUl.appendChild(navItem);
+// get existing links from menu items
+function getMenuLinks(menuItems) {
+    let menuLink = [];
+    for (const menuItem of menuItems) {
+        menuLink.push(menuItem.querySelector('a').getAttribute('href'))
     }
+    return menuLink;
 }
 
 function listenForDOMChanges() {
@@ -60,6 +52,27 @@ function listenForDOMChanges() {
  *
  */
 
+// build the nav
+function buildNavigationList() {
+    let sections = document.querySelectorAll('section');
+    const navUl = document.getElementById('navbar__list');
+    const menuItems = navUl.querySelectorAll('li');
+    menuLinks = getMenuLinks(menuItems);
+    console.log(menuLinks)
+    for (const section of sections) {
+        if (!menuLinks.includes(`#${section.id}`)) {
+            const navItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.setAttribute('href', `#${section.id}`);
+            // console.log(link)
+            link.textContent = section.dataset.nav;
+            navItem.appendChild(link);
+            navUl.appendChild(navItem);
+        }
+    }
+}
+
+buildNavigationList();
 listenForDOMChanges();
 // Add class 'active' to section when near top of viewport
 
