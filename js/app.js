@@ -38,7 +38,6 @@ function listenForDOMChanges() {
     const bodyNode = document.getElementsByTagName('main')[0];
     const config = { attributes: true, childList: true, subtree: true };
     const callback = function(mutationsList, observer){
-        console.log('here');
         buildNavigationList();
     };
     const observer = new MutationObserver(callback);
@@ -58,27 +57,30 @@ function buildNavigationList() {
     const navUl = document.getElementById('navbar__list');
     const menuItems = navUl.querySelectorAll('li');
     menuLinks = getMenuLinks(menuItems);
-    console.log(menuLinks)
     for (const section of sections) {
         if (!menuLinks.includes(`#${section.id}`)) {
             const navItem = document.createElement('li');
-            const link = document.createElement('a');
-            link.setAttribute('href', `#${section.id}`);
-            // console.log(link)
-            link.textContent = section.dataset.nav;
-            navItem.appendChild(link);
+            navItem.setAttribute('id', `#${section.id}`);
+            navItem.setAttribute('class', 'navbar__menu');
+            navItem.addEventListener("click", scrollToSection);
+            navItem.textContent = section.dataset.nav;
+            navUl.setAttribute('class', "navbar__menu menu__link");
             navUl.appendChild(navItem);
         }
     }
 }
 
-buildNavigationList();
-listenForDOMChanges();
+
 // Add class 'active' to section when near top of viewport
 
 
 // Scroll to anchor ID using scrollTO event
-
+function scrollToSection(event) {
+    console.log(event.target);
+    const destinationSection = document.querySelector(event.target.id);
+    console.log(destinationSection);
+    destinationSection.scrollIntoView({behavior: "smooth"});
+}
 
 /**
  * End Main Functions
@@ -87,7 +89,8 @@ listenForDOMChanges();
  */
 
 // Build menu
-
+buildNavigationList();
+listenForDOMChanges();
 
 // Scroll to section on link click
 
