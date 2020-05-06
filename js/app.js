@@ -15,9 +15,10 @@
 
 /**
  * Define Global Variables
- * 
-*/
+ *
+ */
 
+let focusSection = document.getElementById('section1');
 
 /**
  * End Global Variables
@@ -29,7 +30,7 @@
 function getMenuLinks(menuItems) {
     let menuLink = [];
     for (const menuItem of menuItems) {
-        menuLink.push(menuItem.querySelector('a').getAttribute('href'))
+        menuLink.push(menuItem.id);
     }
     return menuLink;
 }
@@ -42,6 +43,7 @@ function listenForDOMChanges() {
     };
     const observer = new MutationObserver(callback);
     observer.observe(bodyNode, config);
+    // console.log(observer);
 
 }
 
@@ -73,6 +75,31 @@ function buildNavigationList() {
 
 // Add class 'active' to section when near top of viewport
 
+function sectionPositions() {
+    let allSections = document.getElementsByTagName('section');
+    let activeSection = document.getElementsByClassName('your-active-class')[0];
+    // let activeSection = document.getElementById('section2');
+    let activeTop = activeSection.getBoundingClientRect()['top'];
+    let activeBottom = activeSection.getBoundingClientRect()['bottom'];
+    let activeSum = activeTop + activeBottom;
+
+
+    for (const section of allSections) {
+        let top = section.getBoundingClientRect()['top'];
+        let bottom = section.getBoundingClientRect()['bottom'];
+        let sum = top + bottom;
+        if (activeSum < 0 || sum < activeSum)
+        if (sum > 0) {
+            console.log(top + bottom);
+            activeSection.removeAttribute('class');
+            activeSection = section;
+            activeSum = sum;
+            activeSection.setAttribute('class', 'your-active-class');
+        }
+    }
+    console.log(activeSection);
+
+}
 
 // Scroll to anchor ID using scrollTO event
 function scrollToSection(event) {
@@ -91,7 +118,6 @@ function scrollToSection(event) {
 // Build menu
 buildNavigationList();
 listenForDOMChanges();
-
 // Scroll to section on link click
 
 // Set sections as active

@@ -17,7 +17,9 @@ function createNewHeader(headerTitle) {
 
 function createNewParagraph() {
     const paragraph = document.createElement('p');
-    paragraph.textContent = "The quick brown fox jumps over the lazy dog";
+    paragraph.textContent = "The quick brown fox jumps over the lazy dog porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.\n" +
+        "\n" +
+        "Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.";
     return paragraph;
 }
 
