@@ -47,6 +47,12 @@ function listenForDOMChanges() {
 
 }
 
+function listenForScroll() {
+    document.addEventListener('scroll', function () {
+        setTimeout(sectionPositions, 300);
+    })
+}
+
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -121,5 +127,5 @@ listenForDOMChanges();
 // Scroll to section on link click
 
 // Set sections as active
-
+listenForScroll();
 
