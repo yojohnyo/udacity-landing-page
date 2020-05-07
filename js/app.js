@@ -18,7 +18,7 @@
  *
  */
 
-let focusSection = document.getElementById('section1');
+
 
 /**
  * End Global Variables
@@ -35,6 +35,7 @@ function getMenuLinks(menuItems) {
     return menuLink;
 }
 
+//Event listener to listen for changes to the DOM to update the menu
 function listenForDOMChanges() {
     const bodyNode = document.getElementsByTagName('main')[0];
     const config = { attributes: true, childList: true, subtree: true };
@@ -43,10 +44,9 @@ function listenForDOMChanges() {
     };
     const observer = new MutationObserver(callback);
     observer.observe(bodyNode, config);
-    // console.log(observer);
-
 }
 
+// Sets up event listener scrolling with a timeout of 300ms
 function listenForScroll() {
     document.addEventListener('scroll', function () {
         setTimeout(sectionPositions, 300);
@@ -84,11 +84,9 @@ function buildNavigationList() {
 function sectionPositions() {
     let allSections = document.getElementsByTagName('section');
     let activeSection = document.getElementsByClassName('your-active-class')[0];
-    // let activeSection = document.getElementById('section2');
     let activeTop = activeSection.getBoundingClientRect()['top'];
     let activeBottom = activeSection.getBoundingClientRect()['bottom'];
     let activeSum = activeTop + activeBottom;
-
 
     for (const section of allSections) {
         let top = section.getBoundingClientRect()['top'];
@@ -96,15 +94,12 @@ function sectionPositions() {
         let sum = top + bottom;
         if (activeSum < 0 || sum < activeSum)
         if (sum > 0) {
-            console.log(top + bottom);
             activeSection.removeAttribute('class');
             activeSection = section;
             activeSum = sum;
             activeSection.setAttribute('class', 'your-active-class');
         }
     }
-    console.log(activeSection);
-
 }
 
 // Scroll to anchor ID using scrollTO event
