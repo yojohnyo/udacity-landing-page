@@ -30,7 +30,7 @@
 function getMenuLinks(menuItems) {
     let menuLink = [];
     for (const menuItem of menuItems) {
-        menuLink.push(menuItem.id);
+        menuLink.push(menuItem.dataset.dest);
     }
     return menuLink;
 }
@@ -67,17 +67,15 @@ function buildNavigationList() {
     menuLinks = getMenuLinks(menuItems);
     console.log(menuLinks);
     for (const section of sections) {
-        if (!menuLinks.includes(`#${section.id}`)) {
+        if (!menuLinks.includes(section.id)) {
             const navItem = document.createElement('li');
             const link = document.createElement('a');
             link.setAttribute('href', `#${section.id}`);
             link.textContent = section.dataset.nav;
             navItem.appendChild(link);
-            navItem.setAttribute('id', section.id);
+            navItem.setAttribute('data-dest', section.id);
             navItem.setAttribute('class', 'navbar__menu');
-            console.log(navItem);
-            navItem.addEventListener("click", scrollToSection);
-            // navItem.textContent = section.dataset.nav;
+            link.addEventListener("click", scrollToSection);
             navUl.setAttribute('class', "navbar__menu menu__link");
             navUl.appendChild(navItem);
         }
@@ -110,10 +108,13 @@ function sectionPositions() {
 
 // Scroll to anchor ID using scrollTO event
 function scrollToSection(event) {
-    console.log(event.target);
-    const destinationSection = document.querySelector(event.target.id);
+    console.log(event.target.parentElement);
+    const parent = event.target.parentElement;
+    console.log(parent.dataset.dest);
+    const destinationSection = document.getElementById(parent.dataset.dest);
     console.log(destinationSection);
     destinationSection.scrollIntoView({behavior: "smooth"});
+    return true;
 }
 
 /**
