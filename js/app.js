@@ -65,13 +65,19 @@ function buildNavigationList() {
     const navUl = document.getElementById('navbar__list');
     const menuItems = navUl.querySelectorAll('li');
     menuLinks = getMenuLinks(menuItems);
+    console.log(menuLinks);
     for (const section of sections) {
         if (!menuLinks.includes(`#${section.id}`)) {
             const navItem = document.createElement('li');
-            navItem.setAttribute('id', `#${section.id}`);
+            const link = document.createElement('a');
+            link.setAttribute('href', `#${section.id}`);
+            link.textContent = section.dataset.nav;
+            navItem.appendChild(link);
+            navItem.setAttribute('id', section.id);
             navItem.setAttribute('class', 'navbar__menu');
+            console.log(navItem);
             navItem.addEventListener("click", scrollToSection);
-            navItem.textContent = section.dataset.nav;
+            // navItem.textContent = section.dataset.nav;
             navUl.setAttribute('class', "navbar__menu menu__link");
             navUl.appendChild(navItem);
         }
