@@ -65,7 +65,6 @@ function buildNavigationList() {
     const navUl = document.getElementById('navbar__list');
     const menuItems = navUl.querySelectorAll('li');
     menuLinks = getMenuLinks(menuItems);
-    console.log(menuLinks);
     for (const section of sections) {
         if (!menuLinks.includes(section.id)) {
             const navItem = document.createElement('li');
@@ -112,6 +111,7 @@ function scrollToSection(event) {
     const parent = event.target.parentElement;
     console.log(parent.dataset.dest);
     const destinationSection = document.getElementById(parent.dataset.dest);
+    event.preventDefault(event);
     console.log(destinationSection);
     destinationSection.scrollIntoView({behavior: "smooth"});
     return true;
