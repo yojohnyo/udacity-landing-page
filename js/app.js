@@ -18,7 +18,7 @@
  *
  */
 
-
+const timeOut = 300;
 
 /**
  * End Global Variables
@@ -46,10 +46,10 @@ function listenForDOMChanges() {
     observer.observe(bodyNode, config);
 }
 
-// Sets up event listener scrolling with a timeout of 300ms
+// Sets up event listener scrolling with a timeout of the global variable 'timeOut'
 function listenForScroll() {
     document.addEventListener('scroll', function () {
-        setTimeout(sectionPositions, 300);
+        setTimeout(sectionPositions, timeOut);
     })
 }
 
@@ -59,8 +59,9 @@ function listenForScroll() {
  *
  */
 
-// build the nav
+// build the navigation menu and add click event listener to the links
 function buildNavigationList() {
+    const fragment = document.createDocumentFragment();
     let sections = document.querySelectorAll('section');
     const navUl = document.getElementById('navbar__list');
     const menuItems = navUl.querySelectorAll('li');
@@ -75,10 +76,11 @@ function buildNavigationList() {
             navItem.setAttribute('data-dest', section.id);
             navItem.setAttribute('class', 'navbar__menu');
             link.addEventListener("click", scrollToSection);
-            navUl.setAttribute('class', "navbar__menu menu__link");
-            navUl.appendChild(navItem);
+            fragment.appendChild(navItem);
         }
     }
+    navUl.setAttribute('class', "navbar__menu menu__link");
+    navUl.appendChild(fragment);
 }
 
 
@@ -107,12 +109,9 @@ function sectionPositions() {
 
 // Scroll to anchor ID using scrollTO event
 function scrollToSection(event) {
-    console.log(event.target.parentElement);
     const parent = event.target.parentElement;
-    console.log(parent.dataset.dest);
     const destinationSection = document.getElementById(parent.dataset.dest);
     event.preventDefault(event);
-    console.log(destinationSection);
     destinationSection.scrollIntoView({behavior: "smooth"});
     return true;
 }
